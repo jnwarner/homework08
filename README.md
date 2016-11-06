@@ -4,7 +4,7 @@
 
 Joshua Warner - jnwarner
 
-Andy Bray - <name here>
+Andy Bray - bogfish
 
 ## Prompt
 
@@ -15,4 +15,4 @@ The prompt for this homework assignment can be found [here](https://sites.google
 1. Read in from files
   * Get number of lines from last file because Price is a jerk
 2. Other stuff... gotta read the prompt
-3.
+3. things gotta go down yo
