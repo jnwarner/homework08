@@ -14,5 +14,5 @@ The prompt for this homework assignment can be found [here](https://sites.google
 
 1. Read in from files
   * Get number of lines from last file because Price is a jerk
-2. Other stuff... gotta read the prompt
-3. things gotta go down yo
+2. Figure out why candidateResponse is printing e
+3. Make more functions
