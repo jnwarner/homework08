@@ -4,8 +4,8 @@
 //Description:
 
 
-#ifndef HW8.H
-#define HW8.H
+#ifndef  HW8_H
+#define  HW8_H
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
@@ -41,25 +41,47 @@ const short MAX_PERC = 100;
 const short MIN_SPEAK = 2;
 const short MAX_SPEAK = 4;
   //The point value for each character
-const char[] ONE_PT = {'e', 'a', 'i', 'o', 'n', 'r', 't', 'l', 's', 'u'};
-const char[] TWO_PT = {'d','g'};
-const char[] THREE_PT = {'b','c','m','p'};
-const char[] FOUR_PT = {'f','h','v','w','y'};
-const char[] FIVE_PT = {'k'};
-const char[] EIGHT_PT = {'j','x'};
-const char[] TEN_PT = {'q','z'};
+const char ONE_PT[] = {'e', 'a', 'i', 'o', 'n', 'r', 't', 'l', 's', 'u'};
+const char TWO_PT[] = {'d','g'};
+const char THREE_PT[] = {'b','c','m','p'};
+const char FOUR_PT[] = {'f','h','v','w','y'};
+const char FIVE_PT[] = {'k'};
+const char EIGHT_PT[] = {'j','x'};
+const char TEN_PT[] = {'q','z'};
   //The amount of questions the user will ask
 const short NUM_QUESTIONS = 8;
   //The punctuation
 const char PERIOD = '.';
 const char QUESTION = '?';
 const char EXCLAME = '!';
+  // Max values
+const short MAX_SENTENCE_VALUE = 1000;
+const short MAX_WORD_VALUE = 20;
 
+  // Filenames
+const string CANDIDATE1_SENTENCES_FILE = "candidate1_sentences.dat";
+const string CANDIDATE1_INTERJECTIONS_FILE = "candidate1_interjections.dat";
+const string CANDIDATE2_SENTENCES_FILE = "candidate2_sentences.dat";
+const string CANDIDATE2_INTERJECTIONS_FILE = "candidate2_interjections.dat";
+const string PREFIX_FILE = "prefix_expressions.dat";
 
 //Structs
 
 //Function Prototypes
 
-void myRand(const short lowerLimit, const short upperLimit);
+// Desc: Generates random number between lowerLimit and upperLimit
+// Pre: lowerLimit and upperLimit must be shorts passed to function
+// Post: Return random number
+short myRand(const short lowerLimit, const short upperLimit);
+
+// Desc: Opens file and gets response from candidate
+// Pre: Score must be initialized and modifiable
+// Post: Prints candidates response and modifies score
+void candidateResponse(const string fileName, const int& score);
+
+// Desc: Opens file and determines interjection to be used
+// Pre: Filename must be correct... use the friggin Constants
+// Post: Print out candidate interjection
+void candidateInterjection(const string fileName);
 
 #endif
