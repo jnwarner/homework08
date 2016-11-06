@@ -4,3 +4,19 @@
 //Description:
 
 #include "hw8.h"
+
+
+int main()
+{
+  
+
+  // Seed the RNG
+  srand(time(NULL));
+
+  // Greet user
+  cout << "Hello, and welcome to The Debate Simulator!" << endl;
+
+
+
+  return 0;
+}
