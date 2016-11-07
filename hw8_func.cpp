@@ -52,6 +52,51 @@ void candidateResponse(const string fileName, const int& score)
 
 void candidateInterjection(const string fileName)
 {
+  ifstream fin(fileName.c_str());
+  short counter = 0;
+  short size;
+  fin >> size;
+  short index = myRand(0,size-1);
+  char interject[size];
 
+
+  for(int i = 0; i < size; i++)
+  {
+    fin.ignore(500, '\n')
+    fin.getline(interject[i], MAX_SENTENCE_VALUE, '\n');
+  }
+
+  cout<<interject[index];
+
+  file.close();
   return;
+}
+
+void appendInsult(const string fileName)
+{
+  ifstream fin(fileName.c_str());
+  short size = fileSize(fileName);
+
+  short index = myRand(0,size-1);
+  char append[size];
+  for(int i = 0; i < size; i++)
+  {
+    fin.getline(append[i], MAX_SENTENCE_VALUE, '\n');
+  }
+  cout >> append[index];
+  
+  fin.close();
+  return;
+}
+
+short fileSize(const string fileName)
+{
+  ifstream fin(fileName.c_str());
+  short size = 0;
+  string dummy;
+  while(fin >> dummy)
+    size++;
+
+  fin.close();
+  return size;
 }

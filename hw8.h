@@ -81,8 +81,18 @@ short myRand(const short lowerLimit, const short upperLimit);
 void candidateResponse(const string fileName, const int& score);
 
 // Desc: Opens file and determines interjection to be used
-// Pre: Filename must be correct... use the friggin Constants
+// Pre: None
 // Post: Print out candidate interjection
 void candidateInterjection(const string fileName);
+
+//Desc: Opens a file and determines what string to append
+//Pre: None
+//Post: An insult/prefix has been appended
+void appendInsult(const string fileName);
+
+//Desc:This function finds how many data sets are in a file
+//Pre:None
+//Post: The number of data sets are returned
+short fileSize(const string fileName);
 
 #endif
