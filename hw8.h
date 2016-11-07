@@ -10,6 +10,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <cctype>
+#include <cstring>
 #include <fstream>
 using namespace std;
 
@@ -59,9 +60,9 @@ const short MAX_SENTENCE_VALUE = 1000;
 const short MAX_WORD_VALUE = 20;
 
   // Filenames
-const string CANDIDATE1_SENTENCES_FILE = "candidate1_sentences.dat";
+const string CANDIDATE1_RESPONSE_FILE = "candidate1_sentences.dat";
 const string CANDIDATE1_INTERJECTIONS_FILE = "candidate1_interjections.dat";
-const string CANDIDATE2_SENTENCES_FILE = "candidate2_sentences.dat";
+const string CANDIDATE2_RESPONSE_FILE = "candidate2_sentences.dat";
 const string CANDIDATE2_INTERJECTIONS_FILE = "candidate2_interjections.dat";
 const string PREFIX_FILE = "prefix_expressions.dat";
 

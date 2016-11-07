@@ -21,22 +21,26 @@ void candidateResponse(const string fileName, const int& score)
 
   if(fin.is_open())
   {
-    cout << "File is connected!" << endl;
     fin >> fileLength;
 
     short randomNumber = myRand(1, fileLength);
 
-    // A lot of shit is astray here, overflow of e's for days when compiled
-    for(short i = 0; i < 2; i++)
+    for(short i = 0; i < randomNumber; i++)
     {
       fin.getline(response, MAX_SENTENCE_VALUE);
-      short size = strlen(response)
-      for (short r = 0; r < size; r++)
+
+      short size = strlen(response);
+
+      if (i + 1 == randomNumber)
       {
-        cout << response[r];
+        for (short r = 0; r < size; r++)
+        {
+          cout << response[r];
+        }
       }
+
+      fin.clear();
     }
-    // End shit that is astray
   } else
     cout << "The file is not open, you idiot" << endl;
 
