@@ -95,4 +95,11 @@ void appendPrefix(const string fileName);
 //Post: The number of data sets are returned
 short fileSize(const string fileName);
 
+//Desc: Finds the number of words in an ntca
+//Pre: None
+//Post: Returns the number of words in the passed ntca
+short numWords(const char sentence[]);
+
+void splitSentence(const string fileName, const short numSentences);
+
 #endif

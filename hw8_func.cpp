@@ -26,6 +26,11 @@ void candidateResponse(const string fileName, const int& score)
     short randomNumber = myRand(1, fileLength);
     if(myRand(MIN_PERC,MAX_PERC) <= PREFIX_PERC)
       appendPrefix(PREFIX_FILE);
+
+    short numSentences = myRand(MIN_SPEAK, MAX_SPEAK);
+    splitSentence(fileName, numSentences);
+
+
     for(short i = 0; i < randomNumber; i++)
     {
       fin.getline(response, MAX_SENTENCE_VALUE);
@@ -59,7 +64,7 @@ void candidateInterjection(const string fileName)
   short index = myRand(0,size-1);
   char interject[MAX_SENTENCE_VALUE];
 
-
+  cout<<" ...";
   for(int i = 0; i < size; i++)
   {
     fin.ignore(500, '\n');
@@ -69,7 +74,7 @@ void candidateInterjection(const string fileName)
 
   for(int i = 0; i < strlen(interject); i++)
     cout << interject[i];
-  cout <<" ";
+  cout <<"... ";
 
   fin.close();
   return;
@@ -106,4 +111,80 @@ short fileSize(const string fileName)
 
   fin.close();
   return size;
+}
+
+short numWords(const char sentence[])
+{
+  short words = 1;
+  short index = 0;
+  string dummy;
+  while(sentence[index] != '\0')
+  {
+    if(isSpace(sentence[index]))
+      words++;
+    index++;
+  }
+  return words;
+}
+
+void splitSentence(const string fileName, const short numSentences)
+{
+  ifstream fin(fileName.c_str());
+  short splitVal;
+  short fileLength;
+  fin >> fileLength;
+  short pickSentence;
+  char tempSentence[MAX_SENTENCE_VALUE];
+  char outSentence[MAX_SENTENCE_VALUE];
+  short index;
+  short word;
+
+  for(int i = 1; i <= numSentences; i++)
+  {
+    pickSentence = myRand(1, fileLength);
+    for(int r = 0; r < fileLength; r++)
+    {
+      if(r+1 == pickSentence)
+      {
+        fin.getline(tempSentence, MAX_SENTENCE_VALUE);
+        splitVal = numWords(tempSentence) / numSentences;
+        word = 1;
+        index = 0;
+        while(word < splitVal)
+        {
+          if(isSpace(tempSentence[index]))
+            word++;
+          index++;
+        }
+        if(i == 1)
+        {
+          strncopy(outSentence, tempSentence, index);
+          if(myRand(MIN_PERC,MAX_PERC) <= INTERJECT_PERC)
+          {
+            if(fileName == CANDIDATE1_RESPONSE_FILE)
+              candidateInterjection(CANDIDATE1_INTERJECTIONS_FILE);
+            else
+              candidateInterjection(CANDIDATE2_INTERJECTIONS_FILE);
+          }
+        }
+        else if(i == numSentences)
+        {
+          strncopy(tempSentence, outSentence, (index * i-1));
+          strcopy(outSentence, tempSentence);
+        }
+        else
+        {
+          strncopy(tempSentence, outSentence, index*i);
+          strcopy(outSentence,tempSentence);
+          if(fileName == CANDIDATE1_RESPONSE_FILE)
+            candidateInterjection(CANDIDATE1_INTERJECTIONS_FILE);
+          else
+            candidateInterjection(CANDIDATE2_INTERJECTIONS_FILE);
+        }
+
+      }
+    }
+
+  }
+  return;
 }
