@@ -34,7 +34,7 @@ const short INTERJECT_PERC = 25;
 const short INTERJECT_MIN = 0;
 const short INTERJECT_MAX = 1;
   //Percent chance an introduction/accusation is appended to the sentence
-const short INSULT_PERC = 50;
+const short PREFIX_PERC = 50;
   //Lower and upper limit for the percent chance generator (1 - 100)
 const short MIN_PERC = 1;
 const short MAX_PERC = 100;
@@ -88,7 +88,7 @@ void candidateInterjection(const string fileName);
 //Desc: Opens a file and determines what string to append
 //Pre: None
 //Post: An insult/prefix has been appended
-void appendInsult(const string fileName);
+void appendPrefix(const string fileName);
 
 //Desc:This function finds how many data sets are in a file
 //Pre:None

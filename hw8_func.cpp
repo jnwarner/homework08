@@ -24,7 +24,8 @@ void candidateResponse(const string fileName, const int& score)
     fin >> fileLength;
 
     short randomNumber = myRand(1, fileLength);
-
+    if(myRand(MIN_PERC,MAX_PERC) <= PREFIX_PERC)
+      appendPrefix(PREFIX_FILE);
     for(short i = 0; i < randomNumber; i++)
     {
       fin.getline(response, MAX_SENTENCE_VALUE);
@@ -68,12 +69,13 @@ void candidateInterjection(const string fileName)
 
   for(int i = 0; i < strlen(interject); i++)
     cout << interject[i];
+  cout <<" ";
 
   fin.close();
   return;
 }
 
-void appendInsult(const string fileName)
+void appendPrefix(const string fileName)
 {
   ifstream fin(fileName.c_str());
   const short size = fileSize(fileName);
@@ -85,9 +87,10 @@ void appendInsult(const string fileName)
     if(i == index)
       fin.getline(append, MAX_SENTENCE_VALUE, '\n');
   }
-
+  //Printing the prefix
   for(int i = 0; i < strlen(append); i++)
     cout << append[i];
+  cout <<" ";
 
   fin.close();
   return;
@@ -98,7 +101,7 @@ short fileSize(const string fileName)
   ifstream fin(fileName.c_str());
   short size = 0;
   string dummy;
-  while(fin >> dummy)
+  while(getline(fin, dummy))
     size++;
 
   fin.close();

@@ -20,7 +20,6 @@ int main()
   // Greet user
   cout << "Hello, and welcome to The Debate Simulator!" << endl;
 
-  cout << "The size is "<<fileSize("prefix_expressions.dat");
 
   //This for loop allows the user to ask the candidates questions
   for(int i = 1; i <= NUM_QUESTIONS; i++)

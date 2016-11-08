@@ -15,7 +15,5 @@ The prompt for this homework assignment can be found [here](https://sites.google
 1. Generate random number to section off 2, 3, or 4 sentences
 2. Generate chance of interjection between concatenated sentences
   * New function for 1 and 2?
-3. Generate chance to append a prefix to the response
-4. Calculate score for Candidate One and Candidate Two
-5. Incorporate appendInsult and candidateInterjection to candidateResponse
-6. Test fileSize
+3. Calculate score for Candidate One and Candidate Two
+4. Incorporate candidateInterjection to candidateResponse
