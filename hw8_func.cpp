@@ -61,7 +61,7 @@ void candidateInterjection(const string fileName)
 
   for(int i = 0; i < size; i++)
   {
-    fin.ignore(500, '\n')
+    fin.ignore(500, '\n');
     if(i == index)
       fin.getline(interject, MAX_SENTENCE_VALUE, '\n');
   }
