@@ -28,26 +28,25 @@ void candidateResponse(const string fileName, const int& score)
       appendPrefix(PREFIX_FILE);
 
     short numSentences = myRand(MIN_SPEAK, MAX_SPEAK);
-    splitSentence(fileName, numSentences);
+    splitSentence(fileName, numSentences, response);
 
 
     for(short i = 0; i < randomNumber; i++)
     {
-      fin.getline(response, MAX_SENTENCE_VALUE);
 
       short size = strlen(response);
 
-      if (i + 1 == randomNumber)
-      {
+
         for (short r = 0; r < size; r++)
         {
           cout << response[r];
         }
-      }
+
 
       fin.clear();
     }
-  } else
+  }
+  else
     cout << "The file is not open, you idiot" << endl;
 
   // Close file
@@ -64,7 +63,7 @@ void candidateInterjection(const string fileName)
   short index = myRand(0,size-1);
   char interject[MAX_SENTENCE_VALUE];
 
-  cout<<" ...";
+
   for(int i = 0; i < size; i++)
   {
     fin.ignore(500, '\n');
@@ -74,7 +73,7 @@ void candidateInterjection(const string fileName)
 
   for(int i = 0; i < strlen(interject); i++)
     cout << interject[i];
-  cout <<"... ";
+
 
   fin.close();
   return;
@@ -120,14 +119,14 @@ short numWords(const char sentence[])
   string dummy;
   while(sentence[index] != '\0')
   {
-    if(isSpace(sentence[index]))
+    if(isspace(sentence[index]))
       words++;
     index++;
   }
   return words;
 }
 
-void splitSentence(const string fileName, const short numSentences)
+void splitSentence(const string fileName, const short numSentences, char response[])
 {
   ifstream fin(fileName.c_str());
   short splitVal;
@@ -135,7 +134,6 @@ void splitSentence(const string fileName, const short numSentences)
   fin >> fileLength;
   short pickSentence;
   char tempSentence[MAX_SENTENCE_VALUE];
-  char outSentence[MAX_SENTENCE_VALUE];
   short index;
   short word;
 
@@ -152,13 +150,17 @@ void splitSentence(const string fileName, const short numSentences)
         index = 0;
         while(word < splitVal)
         {
-          if(isSpace(tempSentence[index]))
+          if(isspace(tempSentence[index]))
             word++;
           index++;
         }
-        if(i == 1)
+
+        for(int c = 0; c < index * i; c++)
         {
-          strncopy(outSentence, tempSentence, index);
+          response[c] = tempSentence[c];
+        }
+        if(i != numSentences)
+        {
           if(myRand(MIN_PERC,MAX_PERC) <= INTERJECT_PERC)
           {
             if(fileName == CANDIDATE1_RESPONSE_FILE)
@@ -167,21 +169,6 @@ void splitSentence(const string fileName, const short numSentences)
               candidateInterjection(CANDIDATE2_INTERJECTIONS_FILE);
           }
         }
-        else if(i == numSentences)
-        {
-          strncopy(tempSentence, outSentence, (index * i-1));
-          strcopy(outSentence, tempSentence);
-        }
-        else
-        {
-          strncopy(tempSentence, outSentence, index*i);
-          strcopy(outSentence,tempSentence);
-          if(fileName == CANDIDATE1_RESPONSE_FILE)
-            candidateInterjection(CANDIDATE1_INTERJECTIONS_FILE);
-          else
-            candidateInterjection(CANDIDATE2_INTERJECTIONS_FILE);
-        }
-
       }
     }
 

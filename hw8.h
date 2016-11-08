@@ -100,6 +100,6 @@ short fileSize(const string fileName);
 //Post: Returns the number of words in the passed ntca
 short numWords(const char sentence[]);
 
-void splitSentence(const string fileName, const short numSentences);
+void splitSentence(const string fileName, const short numSentences, char response[]);
 
 #endif
