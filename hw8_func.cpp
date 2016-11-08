@@ -66,10 +66,10 @@ void candidateInterjection(const string fileName)
       fin.getline(interject, MAX_SENTENCE_VALUE, '\n');
   }
 
-  for(int i = 0; i strlen(interject), i++)
+  for(int i = 0; i < strlen(interject); i++)
     cout << interject[i];
 
-  file.close();
+  fin.close();
   return;
 }
 
@@ -88,7 +88,7 @@ void appendInsult(const string fileName)
 
   for(int i = 0; i < strlen(append); i++)
     cout << append[i];
-    
+
   fin.close();
   return;
 }
