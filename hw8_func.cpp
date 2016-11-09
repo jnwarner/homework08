@@ -31,8 +31,8 @@ void candidateResponse(const string fileName, const int& score)
     splitSentence(fileName, numSentences, response);
 
 
-    for(short i = 0; i < randomNumber; i++)
-    {
+    //for(short i = 0; i < randomNumber; i++)
+    //{
 
       short size = strlen(response);
 
@@ -44,7 +44,7 @@ void candidateResponse(const string fileName, const int& score)
 
 
       fin.clear();
-    }
+    //}
   }
   else
     cout << "The file is not open, you idiot" << endl;
@@ -134,8 +134,11 @@ void splitSentence(const string fileName, const short numSentences, char respons
   fin >> fileLength;
   short pickSentence;
   char tempSentence[MAX_SENTENCE_VALUE];
+  char temp1[MAX_SENTENCE_VALUE];
+  char temp2[MAX_SENTENCE_VALUE];
+  char temp3[MAX_SENTENCE_VALUE];
+  char temp4[MAX_SENTENCE_VALUE];
   short index;
-  short word;
 
   for(int i = 1; i <= numSentences; i++)
   {
@@ -146,20 +149,58 @@ void splitSentence(const string fileName, const short numSentences, char respons
       {
         fin.getline(tempSentence, MAX_SENTENCE_VALUE);
         splitVal = numWords(tempSentence) / numSentences;
-        word = 1;
         index = 0;
-        while(word < splitVal)
+
+        for(int c = 0; c < splitVal; c++)
         {
-          if(isspace(tempSentence[index]))
-            word++;
-          index++;
+          do
+          {
+            temp1[index] = tempSentence[index];
+            index++;
+          } while(tempSentence[index] != ' ');
+        }
+        for(int c = 0; c < splitVal; c++)
+        {
+          do
+          {
+            temp2[index] = tempSentence[index];
+            index++;
+          } while(tempSentence[index] != ' ');
+        }
+        if(numSentences > 2)
+        {
+          for(int c = 0; c < splitVal; c++)
+          {
+            do
+            {
+              temp3[index] = tempSentence[index];
+              index++;
+            } while(tempSentence[index] != ' ');
+          }
+        }
+        if(numSentences > 3)
+        {
+          for(int c = 0; c < splitVal; c++)
+          {
+            do
+            {
+              temp4[index] = tempSentence[index];
+              index++;
+            } while(tempSentence[index] != '\0');
+          }
         }
 
-        for(int c = 0; c < index * i; c++)
-        {
-          response[c] = tempSentence[c];
-        }
-        if(i != numSentences)
+        if(i == 1)
+          strcat(response, temp1);
+        if(i == 2)
+          strcat(response, temp2);
+        if(i == 3)
+          strcat(response, temp3);
+        if(i == 4)
+          strcat(response, temp4);
+
+
+        if(i != 1)
         {
           if(myRand(MIN_PERC,MAX_PERC) <= INTERJECT_PERC)
           {
