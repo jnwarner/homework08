@@ -83,12 +83,12 @@ void candidateResponse(const string fileName, const int& score);
 // Desc: Opens file and determines interjection to be used
 // Pre: None
 // Post: Print out candidate interjection
-void candidateInterjection(const string fileName);
+void candidateInterjection(const string fileName, char response[]);
 
 //Desc: Opens a file and determines what string to append
 //Pre: None
 //Post: An insult/prefix has been appended
-void appendPrefix(const string fileName);
+void appendPrefix(const string fileName, char response[]);
 
 //Desc:This function finds how many data sets are in a file
 //Pre:None
@@ -100,6 +100,10 @@ short fileSize(const string fileName);
 //Post: Returns the number of words in the passed ntca
 short numWords(const char sentence[]);
 
-void splitSentence(const string fileName, const short numSentences, char response[]);
+
+// TODO: make numSentences constant
+void splitSentence(const string fileName, char response[]);
+
+short charCounter(const char sentence[], const short length);
 
 #endif
