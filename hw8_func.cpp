@@ -46,11 +46,12 @@ void candidateInterjection(const string fileName, int & score)
       fin.getline(interject, MAX_SENTENCE_VALUE, '\n');
   }
 
-
+  cout<<" ";
   for(int i = 0; i < strlen(interject); i++)
   {
     cout<<interject[i];
   }
+  cout<<" ";
 
   scoreAdjuster(score, interject);
 
@@ -77,6 +78,7 @@ void appendPrefix(const string fileName, int & score)
   {
     cout<<append[i];
   }
+  cout<<" ";
 
   scoreAdjuster(score, append);
 
@@ -234,15 +236,16 @@ void splitSentence(const string fileName, int & score)
 
     scoreAdjuster(score, tempSentence);
     short interjectionChance = myRand(MIN_PERC, MAX_PERC);
-
-    if (interjectionChance < INTERJECT_PERC)
+    if(i < 3)
     {
-      if (fileName == CANDIDATE1_RESPONSE_FILE)
-        candidateInterjection(CANDIDATE1_INTERJECTIONS_FILE, score);
-      else
-        candidateInterjection(CANDIDATE2_INTERJECTIONS_FILE, score);
+      if (interjectionChance < INTERJECT_PERC)
+      {
+        if (fileName == CANDIDATE1_RESPONSE_FILE)
+          candidateInterjection(CANDIDATE1_INTERJECTIONS_FILE, score);
+        else
+          candidateInterjection(CANDIDATE2_INTERJECTIONS_FILE, score);
+      }
     }
-
     fin.close();
   }
 
@@ -307,6 +310,7 @@ void letterScore(int & score, const char letter)
         tempScore *= 3;
       score += tempScore;
     }
+    index++;
   }
   if(!found)
   {
@@ -322,6 +326,7 @@ void letterScore(int & score, const char letter)
           tempScore *= 3;
         score += tempScore;
       }
+      index++;
     }
 
     while(!found && index < strlen(TWO_PT))
@@ -336,6 +341,7 @@ void letterScore(int & score, const char letter)
           tempScore *= 3;
         score += tempScore;
       }
+      index++;
     }
 
     while(!found && index < strlen(THREE_PT))
@@ -350,6 +356,7 @@ void letterScore(int & score, const char letter)
           tempScore *= 3;
         score += tempScore;
       }
+      index++;
     }
 
     while(!found && index < strlen(FOUR_PT))
@@ -364,6 +371,7 @@ void letterScore(int & score, const char letter)
           tempScore *= 3;
         score += tempScore;
       }
+      index++;
     }
 
     while(!found && index < strlen(FIVE_PT))
@@ -378,6 +386,7 @@ void letterScore(int & score, const char letter)
           tempScore *= 3;
         score += tempScore;
       }
+      index++;
     }
 
     while(!found && index < strlen(EIGHT_PT))
@@ -392,6 +401,7 @@ void letterScore(int & score, const char letter)
           tempScore *= 3;
         score += tempScore;
       }
+      index++;
     }
   }
 

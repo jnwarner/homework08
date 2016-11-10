@@ -45,6 +45,10 @@ int main()
     }
   }
 
+  cout<<endl<<"The final scores are: "<<endl;
+  cout<<"Candidate 1: "<<score1<<endl;
+  cout<<"Candidate 2: "<<score2<<endl;
+
 
   return 0;
 }
