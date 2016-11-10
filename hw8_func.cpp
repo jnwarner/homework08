@@ -305,11 +305,11 @@ short charCounter(const char sentence[], const short length)
 {
   short words = 0;
   short index = 0;
-
+  //Length is actually the number of words to count to
   while(words < length)
   {
-    if(isspace(sentence[index]))
-      words++;
+    if(isspace(sentence[index]))//checks to see if there is a space to mark
+      words++;                  //a new word
     index++;
   }
   return index;
@@ -317,25 +317,26 @@ short charCounter(const char sentence[], const short length)
 
 void scoreAdjuster(int & score, char arr[])
 {
-  int letScore = 0;
-  int wordScore = 0;
+  int letScore = 0;//Sum of scores of the letters in a word
+  int wordScore = 0;//The score for an entire word
   for(int i = 0; i < strlen(arr); i++)
   {
+    //Makes sure a character is a letter
     if(isalpha(arr[i]))
     {
       wordScore = 0;
       if(isupper(arr[i]))
-        tolower(arr[i]);
-      letterScore(letScore, arr[i]);
+        tolower(arr[i]);//Since the constant arrays are lowercase, the character
+      letterScore(letScore, arr[i]);// must be as well
     }
     else if(isspace(arr[i]) || ispunct(arr[i]))
     {
       wordScore += letScore;
-      letScore = 0;
+      letScore = 0;//resets letScore for the next set of letters
       if(myRand(MIN_PERC, MAX_PERC) <= WORD_DBL)
-        wordScore *= 2;
+        wordScore *= 2;//Doubles the score of the word
       else if(myRand(MIN_PERC, MAX_PERC) <= WORD_TRPL)
-        wordScore *= 3;
+        wordScore *= 3;//Triples the score of the word
       score += wordScore;
     }
   }
@@ -345,24 +346,26 @@ void scoreAdjuster(int & score, char arr[])
 void letterScore(int & score, const char letter)
 {
   short tempScore = 0;
-  bool found = false;
+  bool found = false;//Checks the passed letter against the constant arrays
   short index = 0;
+
   while(!found && index < strlen(ONE_PT))
   {
-    if (letter == ONE_PT[index])
+    if (letter == ONE_PT[index])//Checks the letter against the constant array
     {
       found = true;
-      tempScore = 1;
+      tempScore = 1;//Assigns the score based on the constant array
       if(myRand(MIN_PERC, MAX_PERC) <= CHAR_DBL)
-        tempScore *= 2;
+        tempScore *= 2;//Doubles the score of the letter
       else if(myRand(MIN_PERC, MAX_PERC) <= CHAR_TRPL)
-        tempScore *= 3;
+        tempScore *= 3;//Triples the score of the letter
       score += tempScore;
     }
     index++;
   }
   if(!found)
   {
+    //All of the following loops operate in the exact same way as the one above
     while(!found && index < strlen(TEN_PT))
     {
       if (letter == TEN_PT[index])
