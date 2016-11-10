@@ -12,7 +12,9 @@ int main()
     //The question string is used to take in the user's questions
   char question[MAX_SENTENCE_VALUE];
   int score1 = 0;
+  int tempScore = 0;
   int score2 = 0;
+  short wordsInQuestion;
 
   // Seed the RNG
   srand(time(NULL));
@@ -20,18 +22,27 @@ int main()
   // Greet user
   cout << "Hello, and welcome to The Debate Simulator!" << endl;
 
-
   //This for loop allows the user to ask the candidates questions
   for(int i = 1; i <= NUM_QUESTIONS; i++)
   {
+    cin.clear();
     cout << endl;
     cout<<"Candidate #" << (i%2 == 0 ? "2: ":"1: ");
-    cin.getline(question, MAX_SENTENCE_VALUE);
+    cin.getline(question, MAX_SENTENCE_VALUE, '\n');
     cout << "ans: ";
+    wordsInQuestion = numWords(question);
     if(i % 2 != 0)
-      candidateResponse(CANDIDATE1_RESPONSE_FILE, score1);
+    {
+      candidateResponse(CANDIDATE1_RESPONSE_FILE, tempScore);
+      tempScore /= wordsInQuestion;
+      score1 += tempScore;
+    }
     else
-      candidateResponse(CANDIDATE2_RESPONSE_FILE, score2);
+    {
+      candidateResponse(CANDIDATE1_RESPONSE_FILE, tempScore);
+      tempScore /= wordsInQuestion;
+      score2 += tempScore;
+    }
   }
 
 

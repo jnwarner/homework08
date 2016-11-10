@@ -78,17 +78,17 @@ short myRand(const short lowerLimit, const short upperLimit);
 // Desc: Opens file and gets response from candidate
 // Pre: Score must be initialized and modifiable
 // Post: Prints candidates response and modifies score
-void candidateResponse(const string fileName, const int& score);
+void candidateResponse(const string fileName, int & score);
 
 // Desc: Opens file and determines interjection to be used
 // Pre: None
 // Post: Print out candidate interjection
-void candidateInterjection(const string fileName, char response[]);
+void candidateInterjection(const string fileName, int & score);
 
 //Desc: Opens a file and determines what string to append
 //Pre: None
 //Post: An insult/prefix has been appended
-void appendPrefix(const string fileName, char response[]);
+void appendPrefix(const string fileName, int & score);
 
 //Desc:This function finds how many data sets are in a file
 //Pre:None
@@ -102,8 +102,12 @@ short numWords(const char sentence[]);
 
 
 // TODO: make numSentences constant
-void splitSentence(const string fileName, char response[]);
+void splitSentence(const string fileName, int & score);
 
 short charCounter(const char sentence[], const short length);
+
+void letterScore(int & score, const char letter);
+
+void scoreAdjuster(int & score, char arr[]);
 
 #endif

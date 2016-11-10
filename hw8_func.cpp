@@ -11,22 +11,14 @@ short myRand(const short lowerLimit, const short upperLimit)
 }
 
 
-void candidateResponse(const string fileName, const int& score)
+void candidateResponse(const string fileName,  int& score)
 {
   // Connect file
   ifstream fin(fileName.c_str());
-  char append[MAX_SENTENCE_VALUE];
-  char c1_response[MAX_SENTENCE_VALUE];
-  char c2_response[MAX_SENTENCE_VALUE];
-  //char word[MAX_WORD_VALUE];
-  short fileLength;
 
   if(fin.is_open())
   {
-    if (fileName == CANDIDATE1_RESPONSE_FILE)
-      splitSentence(CANDIDATE1_RESPONSE_FILE, c1_response);
-    else
-      splitSentence(CANDIDATE2_RESPONSE_FILE, c2_response);
+    splitSentence(fileName, score);
 
     fin.clear();
   }
@@ -39,7 +31,7 @@ void candidateResponse(const string fileName, const int& score)
   return;
 }
 
-void candidateInterjection(const string fileName, char response[])
+void candidateInterjection(const string fileName, int & score)
 {
   ifstream fin(fileName.c_str());
   short size;
@@ -54,14 +46,19 @@ void candidateInterjection(const string fileName, char response[])
       fin.getline(interject, MAX_SENTENCE_VALUE, '\n');
   }
 
-  strcat(response, interject);
 
+  for(int i = 0; i < strlen(interject); i++)
+  {
+    cout<<interject[i];
+  }
+
+  scoreAdjuster(score, interject);
 
   fin.close();
   return;
 }
 
-void appendPrefix(const string fileName, char response[])
+void appendPrefix(const string fileName, int & score)
 {
   ifstream fin(fileName.c_str());
   const short size = fileSize(fileName);
@@ -76,7 +73,12 @@ void appendPrefix(const string fileName, char response[])
     fin.ignore(500, '\n');
   }
   //Printing the prefix
-  strcat(response, append);
+  for(int i = 0; i < strlen(append); i++)
+  {
+    cout<<append[i];
+  }
+
+  scoreAdjuster(score, append);
 
   fin.close();
   return;
@@ -108,19 +110,17 @@ short numWords(const char sentence[])
   return words;
 }
 
-void splitSentence(const string fileName, char response[])
+void splitSentence(const string fileName, int & score)
 {
   ifstream fin;
 
   short fileLength;
   short splitVal;
-  short responseVal;
-  short tempScore;
   char tempSentence[MAX_SENTENCE_VALUE];
 
   short numSentences = myRand(MIN_SPEAK, MAX_SPEAK);
 
-  appendPrefix(PREFIX_FILE, response);
+  appendPrefix(PREFIX_FILE, score);
 
   for (short i = 0; i < numSentences; i++)
   {
@@ -220,20 +220,27 @@ void splitSentence(const string fileName, char response[])
           splitVal--;
       }
 
-      for (short t = splitVal; t < stringLength; t++)
+      for (short t = splitVal; t < stringLength-1; t++)
       {
         cout << tempSentence[t];
       }
+      if(myRand(MIN_PERC, MAX_PERC) <= PERIOD_PERC)
+        cout << '.';
+      else if(myRand(MIN_PERC, MAX_PERC) <= QUEST_PERC)
+        cout <<'?';
+      else
+        cout <<'!';
     }
 
+    scoreAdjuster(score, tempSentence);
     short interjectionChance = myRand(MIN_PERC, MAX_PERC);
 
     if (interjectionChance < INTERJECT_PERC)
     {
       if (fileName == CANDIDATE1_RESPONSE_FILE)
-        candidateInterjection(CANDIDATE1_INTERJECTIONS_FILE, response);
+        candidateInterjection(CANDIDATE1_INTERJECTIONS_FILE, score);
       else
-        candidateInterjection(CANDIDATE2_INTERJECTIONS_FILE, response);
+        candidateInterjection(CANDIDATE2_INTERJECTIONS_FILE, score);
     }
 
     fin.close();
@@ -254,4 +261,140 @@ short charCounter(const char sentence[], const short length)
     index++;
   }
   return index;
+}
+
+void scoreAdjuster(int & score, char arr[])
+{
+  int letScore = 0;
+  int wordScore = 0;
+  for(int i = 0; i < strlen(arr); i++)
+  {
+    if(isalpha(arr[i]))
+    {
+      wordScore = 0;
+      if(isupper(arr[i]))
+        tolower(arr[i]);
+      letterScore(letScore, arr[i]);
+    }
+    else if(isspace(arr[i]) || ispunct(arr[i]))
+    {
+      wordScore += letScore;
+      letScore = 0;
+      if(myRand(MIN_PERC, MAX_PERC) <= WORD_DBL)
+        wordScore *= 2;
+      else if(myRand(MIN_PERC, MAX_PERC) <= WORD_TRPL)
+        wordScore *= 3;
+      score += wordScore;
+    }
+  }
+  return;
+}
+
+void letterScore(int & score, const char letter)
+{
+  short tempScore = 0;
+  bool found = false;
+  short index = 0;
+  while(!found && index < strlen(ONE_PT))
+  {
+    if (letter == ONE_PT[index])
+    {
+      found = true;
+      tempScore = 1;
+      if(myRand(MIN_PERC, MAX_PERC) <= CHAR_DBL)
+        tempScore *= 2;
+      else if(myRand(MIN_PERC, MAX_PERC) <= CHAR_TRPL)
+        tempScore *= 3;
+      score += tempScore;
+    }
+  }
+  if(!found)
+  {
+    while(!found && index < strlen(TEN_PT))
+    {
+      if (letter == TEN_PT[index])
+      {
+        found = true;
+        tempScore = 10;
+        if(myRand(MIN_PERC, MAX_PERC) <= CHAR_DBL)
+          tempScore *= 2;
+        else if(myRand(MIN_PERC, MAX_PERC) <= CHAR_TRPL)
+          tempScore *= 3;
+        score += tempScore;
+      }
+    }
+
+    while(!found && index < strlen(TWO_PT))
+    {
+      if (letter == TWO_PT[index])
+      {
+        found = true;
+        tempScore = 2;
+        if(myRand(MIN_PERC, MAX_PERC) <= CHAR_DBL)
+          tempScore *= 2;
+        else if(myRand(MIN_PERC, MAX_PERC) <= CHAR_TRPL)
+          tempScore *= 3;
+        score += tempScore;
+      }
+    }
+
+    while(!found && index < strlen(THREE_PT))
+    {
+      if (letter == THREE_PT[index])
+      {
+        found = true;
+        tempScore = 3;
+        if(myRand(MIN_PERC, MAX_PERC) <= CHAR_DBL)
+          tempScore *= 2;
+        else if(myRand(MIN_PERC, MAX_PERC) <= CHAR_TRPL)
+          tempScore *= 3;
+        score += tempScore;
+      }
+    }
+
+    while(!found && index < strlen(FOUR_PT))
+    {
+      if (letter == FOUR_PT[index])
+      {
+        found = true;
+        tempScore = 4;
+        if(myRand(MIN_PERC, MAX_PERC) <= CHAR_DBL)
+          tempScore *= 2;
+        else if(myRand(MIN_PERC, MAX_PERC) <= CHAR_TRPL)
+          tempScore *= 3;
+        score += tempScore;
+      }
+    }
+
+    while(!found && index < strlen(FIVE_PT))
+    {
+      if (letter == FIVE_PT[index])
+      {
+        found = true;
+        tempScore = 5;
+        if(myRand(MIN_PERC, MAX_PERC) <= CHAR_DBL)
+          tempScore *= 2;
+        else if(myRand(MIN_PERC, MAX_PERC) <= CHAR_TRPL)
+          tempScore *= 3;
+        score += tempScore;
+      }
+    }
+
+    while(!found && index < strlen(EIGHT_PT))
+    {
+      if (letter == EIGHT_PT[index])
+      {
+        found = true;
+        tempScore = 8;
+        if(myRand(MIN_PERC, MAX_PERC) <= CHAR_DBL)
+          tempScore *= 2;
+        else if(myRand(MIN_PERC, MAX_PERC) <= CHAR_TRPL)
+          tempScore *= 3;
+        score += tempScore;
+      }
+    }
+  }
+
+
+  return;
 }
