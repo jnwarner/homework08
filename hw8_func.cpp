@@ -7,6 +7,7 @@
 
 short myRand(const short lowerLimit, const short upperLimit)
 {
+  // Return random number
   return rand() % (upperLimit - lowerLimit + 1) + lowerLimit;
 }
 
@@ -16,13 +17,17 @@ void candidateResponse(const string fileName,  int& score)
   // Connect file
   ifstream fin(fileName.c_str());
 
+  // Check if file is open
   if(fin.is_open())
   {
+    // Split sentence and calculate score
     splitSentence(fileName, score);
 
+    // Clear for good measure
     fin.clear();
   }
   else
+    // Let the user know the file is not open
     cout << "The file is not open, you idiot" << endl;
 
   // Close file
@@ -33,12 +38,14 @@ void candidateResponse(const string fileName,  int& score)
 
 void candidateInterjection(const string fileName, int & score)
 {
+  // Connect file
   ifstream fin(fileName.c_str());
-  short size;
-  fin >> size;
-  short index = myRand(0,size-1);
-  char interject[MAX_SENTENCE_VALUE];
+  short size;   // Declare size
+  fin >> size;    // Get size of file
+  short index = myRand(0,size-1);   // Generate index
+  char interject[MAX_SENTENCE_VALUE];   // Get interjection index
 
+  // Get line at randomly generated index
   for(int i = 0; i < size; i++)
   {
     fin.ignore(500, '\n');
@@ -46,27 +53,37 @@ void candidateInterjection(const string fileName, int & score)
       fin.getline(interject, MAX_SENTENCE_VALUE, '\n');
   }
 
+  // Output space for formatting
   cout<<" ";
+
+  // Output interjection
   for(int i = 0; i < strlen(interject); i++)
   {
     cout<<interject[i];
   }
+  // Output space for formatting
   cout<<" ";
 
+  // Adjusts score according to guidelines
   scoreAdjuster(score, interject);
 
+  // Close the file
   fin.close();
   return;
 }
 
 void appendPrefix(const string fileName, int & score)
 {
+  // Connect file
   ifstream fin(fileName.c_str());
+  // Set size to size of file
   const short size = fileSize(fileName);
-
+  // Set index equal to random number between 1 and size
   short index = myRand(1, size);
+  // Declare append variable
   char append[MAX_SENTENCE_VALUE];
 
+  // get random line
   for(int i = 0; i < size; i++)
   {
     if(i == index - 1)
@@ -76,35 +93,42 @@ void appendPrefix(const string fileName, int & score)
   //Printing the prefix
   for(int i = 0; i < strlen(append); i++)
   {
-    cout<<append[i];
+    // Output append[]
+    cout << append[i];
   }
+  // Output space for formatting
   cout<<" ";
 
+  // Adjust score
   scoreAdjuster(score, append);
 
+  // Close file
   fin.close();
   return;
 }
 
 short fileSize(const string fileName)
 {
+  // Connect file
   ifstream fin(fileName.c_str());
-  short size = 0;
-  string dummy;
-  while(getline(fin, dummy))
+  short size = 0;   // Set size to 0
+  string dummy;   // Dummy string to get line
+  while(getline(fin, dummy))  // Increments size
     size++;
 
+  // close file
   fin.close();
   return size;
 }
 
 short numWords(const char sentence[])
 {
-  short words = 1;
-  short index = 0;
-  string dummy;
+  short words = 1;  // Words set to 1 by default
+  short index = 0;  // Index set to 0
+  string dummy;   // Dummy sentence for finding number of words
   while(sentence[index] != '\0')
   {
+    // Check if index is space
     if(isspace(sentence[index]))
       words++;
     index++;
@@ -114,39 +138,50 @@ short numWords(const char sentence[])
 
 void splitSentence(const string fileName, int & score)
 {
+  // Declare fin
   ifstream fin;
 
-  short fileLength;
-  short splitVal;
-  char tempSentence[MAX_SENTENCE_VALUE];
+  short fileLength;   // File length
+  short splitVal;   // Split value based on numSentences
+  char tempSentence[MAX_SENTENCE_VALUE];  // tempSentence
 
-  short numSentences = myRand(MIN_SPEAK, MAX_SPEAK);
+  short numSentences = myRand(MIN_SPEAK, MAX_SPEAK);  // Generate numSentences
 
-  appendPrefix(PREFIX_FILE, score);
+  appendPrefix(PREFIX_FILE, score);   // append prefix to output sentence
 
+  // For loop for number of sentences generated
   for (short i = 0; i < numSentences; i++)
   {
+    // Connect file to go to top of file
     fin.open(fileName.c_str());
     fin.ignore();
     fin.clear();
 
+    // Get fileLength
     fin >> fileLength;
 
+    // Get random sentence within file
     short randomSentence = myRand(2, fileLength);
 
+    // Getline of randomSentence
     for (short t = 0; t + 1 <= randomSentence; t++)
     {
       fin.getline(tempSentence, MAX_SENTENCE_VALUE);
     }
 
+    // Get length of string
     short stringLength = strlen(tempSentence);
 
+    // Calculate splitVal
     splitVal = stringLength / numSentences;
 
+    // Get endVal for string chunk calculation
     short endVal = splitVal * 2;
 
+    // check for first sentence
     if (i == 0)
     {
+      // Check if index at splitVal and endVal are spaces. if not, sutract
       if (tempSentence[splitVal] != ' ' || tempSentence[endVal] != ' ')
       {
         while (tempSentence[splitVal] != ' ')
@@ -155,12 +190,14 @@ void splitSentence(const string fileName, int & score)
           endVal--;
       }
 
+      // output tempSentence
       for (short t = 0; t < splitVal; t++)
         cout << tempSentence[t];
     }
 
     if (i == 1)
     {
+      // Check if index at splitVal and endVal are spaces. if not, sutract
       if (tempSentence[splitVal] != ' ' || tempSentence[endVal] != ' ')
       {
         while (tempSentence[splitVal] != ' ')
@@ -169,6 +206,7 @@ void splitSentence(const string fileName, int & score)
           endVal--;
       }
 
+      // output tempSentence
       if (!(numSentences >= 2))
       {
         for (short t = splitVal; t < endVal; t++)
@@ -187,8 +225,10 @@ void splitSentence(const string fileName, int & score)
 
     if (i == 2)
     {
+      // calculate splitval and endval for third sentence
       splitVal *= 2;
       endVal *= 2;
+      // Check if index at splitVal and endVal are spaces. if not, sutract
       if (tempSentence[splitVal] != ' ' || tempSentence[endVal] != ' ')
       {
         while (tempSentence[splitVal] != ' ')
@@ -197,6 +237,7 @@ void splitSentence(const string fileName, int & score)
           endVal--;
       }
 
+      // output tempSentence
       if (numSentences != 3)
       {
         for (short t = splitVal; t < endVal; t++)
@@ -215,17 +256,21 @@ void splitSentence(const string fileName, int & score)
 
     if (i == 3)
     {
+      // Get new splitval for last chunk
       splitVal *= 3;
+      // Check if index at splitVal is a space. if not, sutract
       if (tempSentence[splitVal] != ' ')
       {
         while (tempSentence[splitVal] != ' ')
           splitVal--;
       }
 
+      // output tempSentence
       for (short t = splitVal; t < stringLength-1; t++)
       {
         cout << tempSentence[t];
       }
+      // Calculate punctuation at the end of sentence
       if(myRand(MIN_PERC, MAX_PERC) <= PERIOD_PERC)
         cout << '.';
       else if(myRand(MIN_PERC, MAX_PERC) <= QUEST_PERC)
@@ -234,9 +279,12 @@ void splitSentence(const string fileName, int & score)
         cout <<'!';
     }
 
+    // Adjust score
     scoreAdjuster(score, tempSentence);
     short interjectionChance = myRand(MIN_PERC, MAX_PERC);
-    if(i < 3)
+
+    // Calculate chance of interjection
+    if(i != numSentences - 1)
     {
       if (interjectionChance < INTERJECT_PERC)
       {
@@ -246,6 +294,7 @@ void splitSentence(const string fileName, int & score)
           candidateInterjection(CANDIDATE2_INTERJECTIONS_FILE, score);
       }
     }
+    // Close file
     fin.close();
   }
 
