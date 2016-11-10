@@ -81,12 +81,12 @@ short myRand(const short lowerLimit, const short upperLimit);
 void candidateResponse(const string fileName, int & score);
 
 // Desc: Opens file and determines interjection to be used
-// Pre: None
+// Pre: Score must be modifiable
 // Post: Print out candidate interjection
 void candidateInterjection(const string fileName, int & score);
 
 //Desc: Opens a file and determines what string to append
-//Pre: None
+//Pre: Score must be modifiable
 //Post: An insult/prefix has been appended
 void appendPrefix(const string fileName, int & score);
 
@@ -101,13 +101,28 @@ short fileSize(const string fileName);
 short numWords(const char sentence[]);
 
 
-// TODO: make numSentences constant
+//Desc: This function displays random sentence fragments and calculates their
+//  scores. Also calls the candidateInterjection function
+//Pre: Score must be modifiable
+//Post: The candidate's random response is displayed and the score is calculated
 void splitSentence(const string fileName, int & score);
 
+//Desc: This function finds how many characters are in an NTCA
+//Pre: None
+//Post: The number of characters in the NTCA is returned
 short charCounter(const char sentence[], const short length);
 
+//Desc: This function calculates the score value of a single letter. It also
+//  determines whether the value of a letter should be doubled or tripled
+//Pre: Score must be modifiable
+//Post: The point value of the letter is added to score
 void letterScore(int & score, const char letter);
 
+//Desc: This function calculates the point value of an entire sentence. It
+//  determines whether a word's score must be doubled or tripled and calls the
+//  letterScore function
+//Pre: Score must be modifiable
+//Post: The point value for the sentence is added to score
 void scoreAdjuster(int & score, char arr[]);
 
 #endif
